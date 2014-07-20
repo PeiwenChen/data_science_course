@@ -1,10 +1,8 @@
+""" Author Peiwen Chen
+    Date July 20th, 2014
 
-"""Author: Peiwen Chen
-Date: July 19th, 2014 
-
-How to use: $ python tweet_sentiment.py AFINN-111.txt output.txt
+how to use: $ python term_sentiment.py sentiment_file tweet_file 
 """
-
 
 import json
 import sys
@@ -26,17 +24,23 @@ def read_tweets(tweet_file):
 	  	linedict = json.loads(line)
 		linesenti = 0.0
 		# compute the sentiment scores of one tweet 
-		if (linedict.get('text')):
+		if ( linedict.get('text')):
 			tweet_text = linedict.get('text').encode('utf8')
 			#print " %s th line tweet_text is %s " %(id, tweet_text)
 			for term in tweet_text.split():
 				if (re.match('^[a-zA-Z0-9_-]*$', term)):
-					linesenti += scores.get(term, 0.0) # return 0 if term does not exists in scores
+					itemsenti = scores.get(term, 0.0)
+					if (itemsenti == 0.0): # not exist 
 		print " ------------line " + str(id) + " sentiment score is " + str(linesenti)
 		id += 1
 
+# term_sentiment = count(term in positive mesg)/count(term in negative msg)
+# how to know if msg is positive or negative?
+# OpinionFinder will decide if msg is positive/negative
+
+
 def main():
-	print " I am testing problem 2 "
+	print " I am testing problem 3 "
 	senti_file = open(sys.argv[1])
 	tweet_file = open(sys.argv[2])
 	read_dict(senti_file)
